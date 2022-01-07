@@ -1,0 +1,18 @@
+- name: apt update
+  apt:
+    update_cache: yes
+- name: apt install package
+  apt:
+    pkg:
+      - steghide
+      - outguess
+      - binwalk
+      - foremost
+      - exiftool
+      - apktool
+      - pngtools
+      - zbar-tools
+      - fcrackzip
+      - john
+      - hashcat
+      - testdisk

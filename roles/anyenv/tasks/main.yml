@@ -27,8 +27,8 @@
           - libxmlsec1-dev
           - libffi-dev
           - liblzma-dev
-    - name: "git clone anyenv"
-      shell: "git clone https://github.com/anyenv/anyenv ~/.anyenv"
+    - name: git clone anyenv
+      shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
       become: no
     - name: add PATH ~/.zshrc
       become: no
@@ -57,29 +57,34 @@
         content: |
           export PATH="$HOME/.anyenv/bin:$PATH"
           eval "$(anyenv init - bash)"
-    - name: "anyenv install --init"
-      shell: "~/.anyenv/bin/anyenv install --force-init"
+    - name: anyenv install --init
+      shell: ~/.anyenv/bin/anyenv install --force-init
       become: no
-    - name: "anyenv install nodenv"
-      shell: "~/.anyenv/bin/anyenv install nodenv"
+    - name: anyenv install nodenv
+      shell: ~/.anyenv/bin/anyenv install nodenv
       become: no
-    - name: "anyenv install pyenv"
-      shell: "~/.anyenv/bin/anyenv install pyenv"
+    - name: anyenv install pyenv
+      shell: ~/.anyenv/bin/anyenv install pyenv
       become: no
-    - name: "install node16"
-      shell: "source ~/.zshrc ; nodenv install 16.13.1 ; nodenv global 16.13.1"
+    - name: install node16
+      shell: source ~/.zshrc ; nodenv install 16.13.1 ; nodenv global 16.13.1
       become: no
       args:
         executable: /usr/bin/zsh
-    - name: "install python3"
-      shell: "source ~/.zshrc ; pyenv install 3.8.12"
+    - name: install python3
+      shell: source ~/.zshrc ; pyenv install 3.8.12
       become: no
       args:
         executable: /usr/bin/zsh
   when:
     - not check_anyenv.stat.exists
-- name: "npm install"
-  shell: "source ~/.zshrc ; nodenv shell 16.13.1 ; npm i -g npm ; npm i -g prettier zx"
+- name: npm install
+  shell: source ~/.zshrc ; nodenv shell 16.13.1 ; npm i -g npm ; npm i -g prettier zx
+  become: no
+  args:
+    executable: /usr/bin/zsh
+- name: pip install
+  shell: source ~/.zshrc ; pyenv shell 3.8.12 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
   become: no
   args:
     executable: /usr/bin/zsh
@@ -90,7 +95,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK python"
     content: |
-      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
       alias pipreq='pip install -r requirements.txt'
       alias venv='source venv/bin/activate.fish'
       alias venvinit='rm -rf venv ; python -m venv venv'
@@ -102,7 +107,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK python"
     content: |
-      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
       alias pipreq='pip install -r requirements.txt'
       alias venv='source venv/bin/activate.fish'
       alias venvinit='rm -rf venv ; python -m venv venv'
@@ -114,7 +119,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK python"
     content: |
-      alias pipinit 'pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipinit 'pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
       alias pipreq 'pip install -r requirements.txt'
       alias venv 'source venv/bin/activate.fish'
       alias venvinit 'rm -rf venv ; python -m venv venv'

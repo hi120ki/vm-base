@@ -1,0 +1,41 @@
+- name: pip install
+  shell: source ~/.zshrc ; pyenv shell 3.8.12 ; pip install -U pip ; pip install -U pwntools angr
+  become: no
+  args:
+    executable: /usr/bin/zsh
+- name: dpkg --add-architecture i386
+  shell: dpkg --add-architecture i386
+- name: apt update
+  apt:
+    update_cache: yes
+- name: apt install package
+  apt:
+    pkg:
+      - gcc
+      - gcc-multilib
+      - g++-multilib
+      - clang
+      - ruby
+      - rubygems
+      - gdb
+      - gdb-multiarch
+      - g++-aarch64-linux-gnu
+      - qemu-user-binfmt
+- name: gem install one_gadget
+  shell: gem install one_gadget
+- name: check gdb_dir
+  stat:
+    path: ~/gdb-peda-pwndbg-gef
+  register: gdb_dir
+  become: no
+- block:
+    - name: git clone gdb-peda-pwndbg-gef
+      become: no
+      shell: git clone https://github.com/apogiatzis/gdb-peda-pwndbg-gef.git ~/gdb-peda-pwndbg-gef
+    - name: install gdb-peda-pwndbg-gef
+      become: no
+      shell: bash ./install.sh
+      args:
+        chdir: ~/gdb-peda-pwndbg-gef
+  when:
+    - not gdb_dir.stat.exists
