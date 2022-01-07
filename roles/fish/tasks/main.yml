@@ -25,7 +25,7 @@
       set -g theme_powerline_fonts no
       set -g theme_nerd_fonts yes
       set -g theme_display_date no
-      set -g theme_color_scheme dracula
+      set -g theme_color_scheme solarized
 
       # ======================================================================== #
       # Customized command
@@ -89,15 +89,6 @@
       alias gc 'git commit -m'
       alias gp 'git push origin (git_current_branch)'
       alias commit 'git add . ; git commit -m "commit" ; git push origin main'
-
-      # Vagrant
-      alias v 'vagrant'
-      alias vup 'vagrant up'
-      alias vssh 'vagrant ssh'
-      alias vstat 'vagrant status'
-      alias vdest 'vagrant destroy -f'
-      alias vhalt 'vagrant halt'
-      alias vrelo 'vagrant reload'
 - name: install fisher
   shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
   become: no

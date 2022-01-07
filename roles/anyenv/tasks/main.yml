@@ -79,7 +79,67 @@
   when:
     - not check_anyenv.stat.exists
 - name: "npm install"
-  shell: "source ~/.zshrc ; nodenv shell 16.13.1 ; npm i -g npm ; npm i -g prettier zx forever"
+  shell: "source ~/.zshrc ; nodenv shell 16.13.1 ; npm i -g npm ; npm i -g prettier zx"
   become: no
   args:
     executable: /usr/bin/zsh
+- name: edit ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipreq='pip install -r requirements.txt'
+      alias venv='source venv/bin/activate.fish'
+      alias venvinit='rm -rf venv ; python -m venv venv'
+      alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
+- name: edit ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipreq='pip install -r requirements.txt'
+      alias venv='source venv/bin/activate.fish'
+      alias venvinit='rm -rf venv ; python -m venv venv'
+      alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit 'pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit pwntools'
+      alias pipreq 'pip install -r requirements.txt'
+      alias venv 'source venv/bin/activate.fish'
+      alias venvinit 'rm -rf venv ; python -m venv venv'
+      alias venvsetup 'venvinit ; venv ; pip install -U pip ; pipreq'
+- name: edit ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup='npm i -g npm ; npm update -g ; npm cache verify'
+- name: edit ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup='npm i -g npm ; npm update -g ; npm cache verify'
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup 'npm i -g npm ; npm update -g ; npm cache verify'

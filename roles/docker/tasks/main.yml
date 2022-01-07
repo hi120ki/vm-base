@@ -62,3 +62,87 @@
         name: docker.service
         state: restarted
   when: check_docker.rc == 1
+- name: edit ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK docker"
+    content: |
+      # Docker
+      alias d='docker'
+      alias dps='docker ps'
+      alias dpsa='docker ps -a'
+      alias dsa='docker start'
+      alias dso='docker stop'
+      alias drm='docker rm'
+      alias drmi='docker rmi'
+      alias dex='docker exec -it'
+      alias di='docker images | sort -k6 -h'
+      alias dip='docker image prune -f'
+      alias dvp='docker volume prune -f'
+      # Docker Compose
+      alias dc='docker-compose'
+      alias dcb='docker-compose build'
+      alias dcu='docker-compose up'
+      alias dcup='docker-compose up -d'
+      alias dcso='docker-compose stop'
+      alias dcrm='docker-compose rm -f'
+      alias dcps='docker-compose ps'
+      alias dcex='docker-compose exec'
+- name: edit ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK docker"
+    content: |
+      # Docker
+      alias d='docker'
+      alias dps='docker ps'
+      alias dpsa='docker ps -a'
+      alias dsa='docker start'
+      alias dso='docker stop'
+      alias drm='docker rm'
+      alias drmi='docker rmi'
+      alias dex='docker exec -it'
+      alias di='docker images | sort -k6 -h'
+      alias dip='docker image prune -f'
+      alias dvp='docker volume prune -f'
+      # Docker Compose
+      alias dc='docker-compose'
+      alias dcb='docker-compose build'
+      alias dcu='docker-compose up'
+      alias dcup='docker-compose up -d'
+      alias dcso='docker-compose stop'
+      alias dcrm='docker-compose rm -f'
+      alias dcps='docker-compose ps'
+      alias dcex='docker-compose exec'
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK docker"
+    content: |
+      # Docker
+      alias d 'docker'
+      alias dps 'docker ps'
+      alias dpsa 'docker ps -a'
+      alias dsa 'docker start'
+      alias dso 'docker stop'
+      alias drm 'docker rm'
+      alias drmi 'docker rmi'
+      alias dex 'docker exec -it'
+      alias di 'docker images | sort -k6 -h'
+      alias dip 'docker image prune -f'
+      alias dvp 'docker volume prune -f'
+      # Docker Compose
+      alias dc 'docker-compose'
+      alias dcb 'docker-compose build'
+      alias dcu 'docker-compose up'
+      alias dcup 'docker-compose up -d'
+      alias dcso 'docker-compose stop'
+      alias dcrm 'docker-compose rm -f'
+      alias dcps 'docker-compose ps'
+      alias dcex 'docker-compose exec'
