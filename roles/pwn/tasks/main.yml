@@ -19,7 +19,6 @@
       - rubygems
       - gdb
       - gdb-multiarch
-      - g++-aarch64-linux-gnu
       - qemu-user-binfmt
 - name: gem install one_gadget
   shell: gem install one_gadget

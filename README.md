@@ -4,7 +4,7 @@
 sudo sed -i.bk -e 's/archive.ubuntu.com/jp.archive.ubuntu.com/g' /etc/apt/sources.list
 git clone https://github.com/hi120ki/vm-base.git
 sudo apt update ; sudo apt install -y ansible
-ansible-playbook -i local, vm-base/base.yml --ask-become-pass
+ansible-playbook -c=local -i local, vm-base/base.yml
 ```
 
 ## Vagrant
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     sudo sed -i.bk -e 's/archive.ubuntu.com/jp.archive.ubuntu.com/g' /etc/apt/sources.list
     git clone https://github.com/hi120ki/vm-base.git
     sudo apt update ; sudo apt install -y ansible
-    ansible-playbook -i local, vm-base/base.yml
+    ansible-playbook -c=local -i local, vm-base/base.yml
   SHELL
 end
 ```
