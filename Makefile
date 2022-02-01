@@ -1,6 +1,6 @@
 .PHONY: install
 install:
-	ansible-playbook -i local, base.yml
+	ansible-playbook -c=local -i local, base.yml
 
 .PHONY: ansible
 ansible:
