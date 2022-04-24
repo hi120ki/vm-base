@@ -73,7 +73,7 @@
       # Shorthand command
       # ======================================================================== #
 
-      alias vm 'cd ~/vm'
+      alias vg 'cd /vagrant'
 
       alias ] 'cd ../'
       alias rmr 'rm -rf'
