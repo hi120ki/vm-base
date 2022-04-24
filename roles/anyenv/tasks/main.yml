@@ -71,6 +71,11 @@
       become: no
       args:
         executable: /usr/bin/zsh
+    - name: install python2
+      shell: source ~/.zshrc ; pyenv install 2.7.18
+      become: no
+      args:
+        executable: /usr/bin/zsh
     - name: install python3
       shell: source ~/.zshrc ; pyenv install 3.8.12
       become: no
