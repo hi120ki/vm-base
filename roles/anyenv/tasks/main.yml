@@ -235,3 +235,33 @@
         executable: /usr/bin/zsh
   when:
     - not check_go.stat.exists
+
+- name: check rbenv installed
+  stat:
+    path: ~/.anyenv/envs/rbenv
+  register: check_rbenv
+  become: no
+- block:
+    - name: anyenv install rbenv
+      shell: ~/.anyenv/bin/anyenv install rbenv
+      become: no
+  when:
+    - not check_rbenv.stat.exists
+- name: check ruby installed
+  stat:
+    path: ~/.anyenv/envs/rbenv/versions/2.7.6
+  register: check_ruby
+  become: no
+- block:
+    - name: install ruby
+      shell: source ~/.zshrc ; rbenv install 2.7.6 ; rbenv global 2.7.6
+      become: no
+      args:
+        executable: /usr/bin/zsh
+  when:
+    - not check_ruby.stat.exists
+- name: gem update
+  shell: source ~/.zshrc ; rbenv shell 2.7.6 ; gem update --system
+  become: no
+  args:
+    executable: /usr/bin/zsh
