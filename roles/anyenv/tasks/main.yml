@@ -63,7 +63,7 @@
 
 - name: check anyenv_install installed
   stat:
-    path: ~/..config/anyenv
+    path: ~/.config/anyenv
   register: check_anyenv_install
   become: no
 - block:
@@ -84,7 +84,6 @@
       become: no
   when:
     - not check_pyenv.stat.exists
-
 - name: check python3 installed
   stat:
     path: ~/.anyenv/envs/pyenv/versions/3.8.13
@@ -98,15 +97,11 @@
         executable: /usr/bin/zsh
   when:
     - not check_python3.stat.exists
-- block:
-    - name: pip install
-      shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
-      become: no
-      args:
-        executable: /usr/bin/zsh
-  when:
-    - check_python3.stat.exists
-
+- name: pip install
+  shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
+  become: no
+  args:
+    executable: /usr/bin/zsh
 - name: check python2 installed
   stat:
     path: ~/.anyenv/envs/pyenv/versions/2.7.18
@@ -120,15 +115,11 @@
         executable: /usr/bin/zsh
   when:
     - not check_python2.stat.exists
-- block:
-    - name: pip install
-      shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip
-      become: no
-      args:
-        executable: /usr/bin/zsh
-  when:
-    - check_python2.stat.exists
-
+- name: pip install
+  shell: source ~/.zshrc ; pyenv shell 2.7.18 ; pip install -U pip
+  become: no
+  args:
+    executable: /usr/bin/zsh
 - name: edit ~/.bashrc
   become: no
   blockinfile:
@@ -177,27 +168,24 @@
       become: no
   when:
     - not check_nodenv.stat.exists
-
 - name: check node16 installed
   stat:
-    path: ~/.anyenv/envs/nodenv/versions/16.14.2
+    path: ~/.anyenv/envs/nodenv/versions/16.15.0
   register: check_node16
   become: no
 - block:
     - name: install node16
-      shell: source ~/.zshrc ; nodenv install 16.14.2 ; nodenv global 16.14.2
+      shell: source ~/.zshrc ; nodenv install 16.15.0 ; nodenv global 16.15.0
       become: no
       args:
         executable: /usr/bin/zsh
   when:
     - not check_node16.stat.exists
-
 - name: npm install
-  shell: source ~/.zshrc ; nodenv shell 16.14.2 ; npm i -g npm ; npm i -g prettier zx
+  shell: source ~/.zshrc ; nodenv shell 16.15.0 ; npm i -g npm ; npm i -g prettier zx
   become: no
   args:
     executable: /usr/bin/zsh
-
 - name: edit ~/.bashrc
   become: no
   blockinfile:
