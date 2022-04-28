@@ -210,3 +210,28 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
     content: |
       alias nup 'npm i -g npm ; npm update -g ; npm cache verify'
+
+- name: check goenv installed
+  stat:
+    path: ~/.anyenv/envs/goenv
+  register: check_goenv
+  become: no
+- block:
+    - name: anyenv install goenv
+      shell: ~/.anyenv/bin/anyenv install goenv
+      become: no
+  when:
+    - not check_goenv.stat.exists
+- name: check go installed
+  stat:
+    path: ~/.anyenv/envs/goenv/versions/1.18.1
+  register: check_go
+  become: no
+- block:
+    - name: install go
+      shell: source ~/.zshrc ; goenv install 1.18.1 ; goenv global 1.18.1
+      become: no
+      args:
+        executable: /usr/bin/zsh
+  when:
+    - not check_go.stat.exists
