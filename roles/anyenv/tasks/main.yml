@@ -30,69 +30,105 @@
     - name: git clone anyenv
       shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
       become: no
-    - name: add PATH ~/.zshrc
-      become: no
-      blockinfile:
-        dest: ~/.zshrc
-        create: true
-        marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
-        content: |
-          export PATH="$HOME/.anyenv/bin:$PATH"
-          eval "$(anyenv init - zsh)"
-    - name: add PATH ~/.config/fish/config.fish
-      become: no
-      blockinfile:
-        dest: ~/.config/fish/config.fish
-        create: true
-        marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
-        content: |
-          set -x PATH ~/.anyenv/bin $PATH
-          anyenv init - | source
-    - name: add PATH ~/.bashrc
-      become: no
-      blockinfile:
-        dest: ~/.bashrc
-        create: true
-        marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
-        content: |
-          export PATH="$HOME/.anyenv/bin:$PATH"
-          eval "$(anyenv init - bash)"
+  when:
+    - not check_anyenv.stat.exists
+
+- name: add PATH ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
+    content: |
+      export PATH="$HOME/.anyenv/bin:$PATH"
+      eval "$(anyenv init - zsh)"
+- name: add PATH ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
+    content: |
+      set -x PATH ~/.anyenv/bin $PATH
+      anyenv init - | source
+- name: add PATH ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK anyenv"
+    content: |
+      export PATH="$HOME/.anyenv/bin:$PATH"
+      eval "$(anyenv init - bash)"
+
+- name: check anyenv_install installed
+  stat:
+    path: ~/..config/anyenv
+  register: check_anyenv_install
+  become: no
+- block:
     - name: anyenv install --init
       shell: ~/.anyenv/bin/anyenv install --force-init
       become: no
-    - name: anyenv install nodenv
-      shell: ~/.anyenv/bin/anyenv install nodenv
-      become: no
+  when:
+    - not check_anyenv_install.stat.exists
+
+- name: check pyenv installed
+  stat:
+    path: ~/.anyenv/envs/pyenv
+  register: check_pyenv
+  become: no
+- block:
     - name: anyenv install pyenv
       shell: ~/.anyenv/bin/anyenv install pyenv
       become: no
-    - name: install node16
-      shell: source ~/.zshrc ; nodenv install 16.14.0 ; nodenv global 16.14.0
+  when:
+    - not check_pyenv.stat.exists
+
+- name: check python3 installed
+  stat:
+    path: ~/.anyenv/envs/pyenv/versions/3.8.13
+  register: check_python3
+  become: no
+- block:
+    - name: install python3
+      shell: source ~/.zshrc ; pyenv install 3.8.13
       become: no
       args:
         executable: /usr/bin/zsh
+  when:
+    - not check_python3.stat.exists
+- block:
+    - name: pip install
+      shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
+      become: no
+      args:
+        executable: /usr/bin/zsh
+  when:
+    - check_python3.stat.exists
+
+- name: check python2 installed
+  stat:
+    path: ~/.anyenv/envs/pyenv/versions/2.7.18
+  register: check_python2
+  become: no
+- block:
     - name: install python2
       shell: source ~/.zshrc ; pyenv install 2.7.18
       become: no
       args:
         executable: /usr/bin/zsh
-    - name: install python3
-      shell: source ~/.zshrc ; pyenv install 3.8.12
+  when:
+    - not check_python2.stat.exists
+- block:
+    - name: pip install
+      shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip
       become: no
       args:
         executable: /usr/bin/zsh
   when:
-    - not check_anyenv.stat.exists
-- name: npm install
-  shell: source ~/.zshrc ; nodenv shell 16.14.0 ; npm i -g npm ; npm i -g prettier zx
-  become: no
-  args:
-    executable: /usr/bin/zsh
-- name: pip install
-  shell: source ~/.zshrc ; pyenv shell 3.8.12 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
-  become: no
-  args:
-    executable: /usr/bin/zsh
+    - check_python2.stat.exists
+
 - name: edit ~/.bashrc
   become: no
   blockinfile:
@@ -129,6 +165,39 @@
       alias venv 'source venv/bin/activate.fish'
       alias venvinit 'rm -rf venv ; python -m venv venv'
       alias venvsetup 'venvinit ; venv ; pip install -U pip ; pipreq'
+
+- name: check nodenv installed
+  stat:
+    path: ~/.anyenv/envs/nodenv
+  register: check_nodenv
+  become: no
+- block:
+    - name: anyenv install nodenv
+      shell: ~/.anyenv/bin/anyenv install nodenv
+      become: no
+  when:
+    - not check_nodenv.stat.exists
+
+- name: check node16 installed
+  stat:
+    path: ~/.anyenv/envs/nodenv/versions/16.14.2
+  register: check_node16
+  become: no
+- block:
+    - name: install node16
+      shell: source ~/.zshrc ; nodenv install 16.14.2 ; nodenv global 16.14.2
+      become: no
+      args:
+        executable: /usr/bin/zsh
+  when:
+    - not check_node16.stat.exists
+
+- name: npm install
+  shell: source ~/.zshrc ; nodenv shell 16.14.2 ; npm i -g npm ; npm i -g prettier zx
+  become: no
+  args:
+    executable: /usr/bin/zsh
+
 - name: edit ~/.bashrc
   become: no
   blockinfile:
