@@ -182,7 +182,7 @@
   when:
     - not check_node16.stat.exists
 - name: npm install
-  shell: source ~/.zshrc ; nodenv shell 16.15.0 ; npm i -g npm ; npm i -g prettier zx
+  shell: source ~/.zshrc ; nodenv shell 16.15.0 ; npm i -g npm ; npm i -g yarn prettier zx
   become: no
   args:
     executable: /usr/bin/zsh
@@ -193,7 +193,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
     content: |
-      alias nup='npm i -g npm ; npm update -g ; npm cache verify'
+      alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
 - name: edit ~/.zshrc
   become: no
   blockinfile:
@@ -201,7 +201,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
     content: |
-      alias nup='npm i -g npm ; npm update -g ; npm cache verify'
+      alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
 - name: edit ~/.config/fish/config.fish
   become: no
   blockinfile:
@@ -209,7 +209,7 @@
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
     content: |
-      alias nup 'npm i -g npm ; npm update -g ; npm cache verify'
+      alias nup 'npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
 
 - name: check goenv installed
   stat:
