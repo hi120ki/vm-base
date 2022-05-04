@@ -109,7 +109,7 @@
   become: no
 - block:
     - name: install python3
-      shell: source ~/.zshrc ; pyenv install 3.8.13
+      shell: source ~/.zshrc ; pyenv install 3.8.13 ; pyenv global 3.8.13
       become: no
       args:
         executable: /usr/bin/zsh
@@ -135,6 +135,11 @@
     - not check_python2.stat.exists
 - name: pip install
   shell: source ~/.zshrc ; pyenv shell 2.7.18 ; pip install -U pip
+  become: no
+  args:
+    executable: /usr/bin/zsh
+- name: pyenv global
+  shell: source ~/.zshrc ; pyenv global 3.8.13
   become: no
   args:
     executable: /usr/bin/zsh
@@ -193,7 +198,7 @@
   become: no
 - block:
     - name: install node16
-      shell: source ~/.zshrc ; nodenv install 16.15.0 ; nodenv global 16.15.0
+      shell: source ~/.zshrc ; nodenv install 16.15.0
       become: no
       args:
         executable: /usr/bin/zsh
@@ -201,6 +206,11 @@
     - not check_node16.stat.exists
 - name: npm install
   shell: source ~/.zshrc ; nodenv shell 16.15.0 ; npm i -g npm ; npm i -g yarn prettier zx
+  become: no
+  args:
+    executable: /usr/bin/zsh
+- name: nodenv global
+  shell: source ~/.zshrc ; nodenv global 16.15.0
   become: no
   args:
     executable: /usr/bin/zsh
