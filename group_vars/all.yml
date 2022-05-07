@@ -1,12 +1,29 @@
 python_install: true
 python3_install: true
 python3_version: "3.8.13"
+python3_libs:
+  - pipdeptree
+  - black
+  - pycryptodome
+  - requests
+  - numpy
+  - sympy
+  - scipy
+  - gmpy2
+  - matplotlib
+  - bandit
 python2_install: true
 python2_version: "2.7.18"
+python2_libs:
+  - numpy
 python_global_version: "3.8.13"
 nodejs_install: true
 nodejs_version: "16.15.0"
 nodejs_global_version: "16.15.0"
+nodejs_libs:
+  - prettier
+  - zx
 golang_install: true
 golang_version: "1.18.1"
 golang_global_version: "1.18.1"
+golang_libs:

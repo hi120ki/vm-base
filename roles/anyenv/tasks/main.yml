@@ -118,10 +118,18 @@
           when:
             - not check_python3.stat.exists
         - name: pip install
-          shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
+          shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U pip
           become: no
           args:
             executable: /usr/bin/zsh
+        - name: pip install libs
+          shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U {{ item }}
+          become: no
+          args:
+            executable: /usr/bin/zsh
+          ignore_errors: True
+          with_items:
+            - "{{ python3_libs }}"
       when:
         - python3_install
     - block:
@@ -143,6 +151,14 @@
           become: no
           args:
             executable: /usr/bin/zsh
+        - name: pip install libs
+          shell: source ~/.zshrc ; pyenv shell {{ python2_version }} ; pip install -U {{ item }}
+          become: no
+          args:
+            executable: /usr/bin/zsh
+          ignore_errors: True
+          with_items:
+            - "{{ python2_libs }}"
       when:
         - python2_install
     - name: pyenv global
@@ -215,10 +231,18 @@
       when:
         - not check_nodejs.stat.exists
     - name: npm install
-      shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g npm ; npm i -g yarn prettier zx
+      shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g npm yarn
       become: no
       args:
         executable: /usr/bin/zsh
+    - name: npm install libs
+      shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g {{ item }}
+      become: no
+      args:
+        executable: /usr/bin/zsh
+      ignore_errors: True
+      with_items:
+        - "{{ nodejs_libs }}"
     - name: nodenv global
       shell: source ~/.zshrc ; nodenv global {{ nodejs_global_version }}
       become: no
@@ -276,6 +300,14 @@
             executable: /usr/bin/zsh
       when:
         - not check_go.stat.exists
+    - name: go install libs
+      shell: source ~/.zshrc ; goenv shell {{ golang_version }} ; go install {{ item }}
+      become: no
+      args:
+        executable: /usr/bin/zsh
+      ignore_errors: True
+      with_items:
+        - "{{ golang_libs }}"
     - name: goenv global
       shell: source ~/.zshrc ; goenv global {{ golang_global_version }}
       become: no
