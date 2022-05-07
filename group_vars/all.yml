@@ -12,6 +12,8 @@ python3_libs:
   - gmpy2
   - matplotlib
   - bandit
+  - pwntools
+  - angr
 python2_install: true
 python2_version: "2.7.18"
 python2_libs:
@@ -22,8 +24,14 @@ nodejs_version: "16.15.0"
 nodejs_global_version: "16.15.0"
 nodejs_libs:
   - prettier
+  - "@prettier/plugin-php"
   - zx
 golang_install: true
 golang_version: "1.18.1"
 golang_global_version: "1.18.1"
 golang_libs:
+ruby_install: true
+ruby_version: "2.7.6"
+ruby_global_version: "2.7.6"
+ruby_libs:
+  - one_gadget
