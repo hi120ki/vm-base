@@ -104,42 +104,42 @@
     - not check_pyenv.stat.exists
 - name: check python3 installed
   stat:
-    path: ~/.anyenv/envs/pyenv/versions/3.8.13
+    path: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}
   register: check_python3
   become: no
 - block:
     - name: install python3
-      shell: source ~/.zshrc ; pyenv install 3.8.13 ; pyenv global 3.8.13
+      shell: source ~/.zshrc ; pyenv install {{ python3_version }}
       become: no
       args:
         executable: /usr/bin/zsh
   when:
     - not check_python3.stat.exists
 - name: pip install
-  shell: source ~/.zshrc ; pyenv shell 3.8.13 ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
+  shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit
   become: no
   args:
     executable: /usr/bin/zsh
 - name: check python2 installed
   stat:
-    path: ~/.anyenv/envs/pyenv/versions/2.7.18
+    path: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}
   register: check_python2
   become: no
 - block:
     - name: install python2
-      shell: source ~/.zshrc ; pyenv install 2.7.18
+      shell: source ~/.zshrc ; pyenv install {{ python2_version }}
       become: no
       args:
         executable: /usr/bin/zsh
   when:
     - not check_python2.stat.exists
 - name: pip install
-  shell: source ~/.zshrc ; pyenv shell 2.7.18 ; pip install -U pip
+  shell: source ~/.zshrc ; pyenv shell {{ python2_version }} ; pip install -U pip
   become: no
   args:
     executable: /usr/bin/zsh
 - name: pyenv global
-  shell: source ~/.zshrc ; pyenv global 3.8.13
+  shell: source ~/.zshrc ; pyenv global {{ python_global_version }}
   become: no
   args:
     executable: /usr/bin/zsh
@@ -191,26 +191,26 @@
       become: no
   when:
     - not check_nodenv.stat.exists
-- name: check node16 installed
+- name: check nodejs installed
   stat:
-    path: ~/.anyenv/envs/nodenv/versions/16.15.0
-  register: check_node16
+    path: ~/.anyenv/envs/nodenv/versions/{{ nodejs_version }}
+  register: check_nodejs
   become: no
 - block:
-    - name: install node16
-      shell: source ~/.zshrc ; nodenv install 16.15.0
+    - name: install nodejs
+      shell: source ~/.zshrc ; nodenv install {{ nodejs_version }}
       become: no
       args:
         executable: /usr/bin/zsh
   when:
-    - not check_node16.stat.exists
+    - not check_nodejs.stat.exists
 - name: npm install
-  shell: source ~/.zshrc ; nodenv shell 16.15.0 ; npm i -g npm ; npm i -g yarn prettier zx
+  shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g npm ; npm i -g yarn prettier zx
   become: no
   args:
     executable: /usr/bin/zsh
 - name: nodenv global
-  shell: source ~/.zshrc ; nodenv global 16.15.0
+  shell: source ~/.zshrc ; nodenv global {{ nodejs_global_version }}
   become: no
   args:
     executable: /usr/bin/zsh
@@ -252,14 +252,19 @@
     - not check_goenv.stat.exists
 - name: check go installed
   stat:
-    path: ~/.anyenv/envs/goenv/versions/1.18.1
+    path: ~/.anyenv/envs/goenv/versions/{{ golang_version }}
   register: check_go
   become: no
 - block:
     - name: install go
-      shell: source ~/.zshrc ; goenv install 1.18.1 ; goenv global 1.18.1
+      shell: source ~/.zshrc ; goenv install {{ golang_version }}
       become: no
       args:
         executable: /usr/bin/zsh
   when:
     - not check_go.stat.exists
+- name: goenv global
+  shell: source ~/.zshrc ; goenv global {{ golang_global_version }}
+  become: no
+  args:
+    executable: /usr/bin/zsh

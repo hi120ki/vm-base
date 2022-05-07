@@ -1,0 +1,7 @@
+python3_version: "3.8.13"
+python2_version: "2.7.18"
+python_global_version: "3.8.13"
+nodejs_version: "16.15.0"
+nodejs_global_version: "16.15.0"
+golang_version: "1.18.1"
+golang_global_version: "1.18.1"
