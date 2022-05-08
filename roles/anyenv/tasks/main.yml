@@ -118,15 +118,11 @@
           when:
             - not check_python3.stat.exists
         - name: pip install
-          shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U pip
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}/bin/python -m pip install -U pip
           become: no
-          args:
-            executable: /usr/bin/zsh
         - name: pip install libs
-          shell: source ~/.zshrc ; pyenv shell {{ python3_version }} ; pip install -U {{ item }}
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}/bin/python -m pip install -U {{ item }}
           become: no
-          args:
-            executable: /usr/bin/zsh
           ignore_errors: True
           with_items:
             - "{{ python3_libs }}"
