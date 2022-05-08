@@ -111,10 +111,8 @@
           become: no
         - block:
             - name: install python3
-              shell: source ~/.zshrc ; pyenv install {{ python3_version }}
+              shell: ~/.anyenv/envs/pyenv/bin/pyenv install {{ python3_version }}
               become: no
-              args:
-                executable: /usr/bin/zsh
           when:
             - not check_python3.stat.exists
         - name: pip install
@@ -136,32 +134,26 @@
           become: no
         - block:
             - name: install python2
-              shell: source ~/.zshrc ; pyenv install {{ python2_version }}
+              shell: ~/.anyenv/envs/pyenv/bin/pyenv install {{ python2_version }}
               become: no
               args:
                 executable: /usr/bin/zsh
           when:
             - not check_python2.stat.exists
         - name: pip install
-          shell: source ~/.zshrc ; pyenv shell {{ python2_version }} ; pip install -U pip
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U  pip
           become: no
-          args:
-            executable: /usr/bin/zsh
         - name: pip install libs
-          shell: source ~/.zshrc ; pyenv shell {{ python2_version }} ; pip install -U {{ item }}
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U  {{ item }}
           become: no
-          args:
-            executable: /usr/bin/zsh
           ignore_errors: True
           with_items:
             - "{{ python2_libs }}"
       when:
         - python2_install
     - name: pyenv global
-      shell: source ~/.zshrc ; pyenv global {{ python_global_version }}
+      shell: ~/.anyenv/envs/pyenv/bin/pyenv global {{ python_global_version }}
       become: no
-      args:
-        executable: /usr/bin/zsh
     - name: edit ~/.bashrc
       become: no
       blockinfile:
