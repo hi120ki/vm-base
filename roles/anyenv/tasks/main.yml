@@ -136,7 +136,7 @@
           become: no
         - block:
             - name: install python2
-              shell: ~/.anyenv/envs/pyenv/bin/pyenv install {{ python2_version }}
+              shell: source ~/.zshrc ; pyenv install {{ python2_version }}
               become: no
               args:
                 executable: /usr/bin/zsh
@@ -154,8 +154,10 @@
       when:
         - python2_install
     - name: pyenv global
-      shell: ~/.anyenv/envs/pyenv/bin/pyenv global {{ python_global_version }}
+      shell: source ~/.zshrc ; pyenv global {{ python_global_version }}
       become: no
+      args:
+        executable: /usr/bin/zsh
     - name: edit ~/.bashrc
       become: no
       blockinfile:
