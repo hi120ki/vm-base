@@ -98,7 +98,7 @@
       alias gp 'git push origin (git_current_branch)'
       alias commit 'git add . ; git commit -m "commit" ; git push origin main'
 - name: install fisher
-  shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+  shell: curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
   become: no
   args:
     executable: /usr/bin/fish
