@@ -316,8 +316,10 @@
       become: no
     - block:
         - name: anyenv install rbenv
-          shell: ~/.anyenv/bin/anyenv install rbenv
+          shell: source ~/.zshrc ; anyenv install rbenv
           become: no
+          args:
+            executable: /usr/bin/zsh
       when:
         - not check_rbenv.stat.exists
     - name: check ruby installed
