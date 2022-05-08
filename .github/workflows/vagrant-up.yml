@@ -1,6 +1,8 @@
 name: vagrant-up
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   vagrant-up:
