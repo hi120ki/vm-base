@@ -111,8 +111,10 @@
           become: no
         - block:
             - name: install python3
-              shell: ~/.anyenv/envs/pyenv/bin/pyenv install {{ python3_version }}
+              shell: source ~/.zshrc ; pyenv install {{ python3_version }}
               become: no
+              args:
+                executable: /usr/bin/zsh
           when:
             - not check_python3.stat.exists
         - name: pip install
@@ -141,10 +143,10 @@
           when:
             - not check_python2.stat.exists
         - name: pip install
-          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U  pip
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U pip
           become: no
         - name: pip install libs
-          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U  {{ item }}
+          shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U {{ item }}
           become: no
           ignore_errors: True
           with_items:
