@@ -30,7 +30,7 @@ golang_install: true
 golang_version: "1.18.1"
 golang_global_version: "1.18.1"
 golang_libs:
-ruby_install: true
+ruby_install: false
 ruby_version: "2.7.6"
 ruby_global_version: "2.7.6"
 ruby_libs:
