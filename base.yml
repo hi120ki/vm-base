@@ -5,9 +5,9 @@
     - git
     - ssh
     - netdata
-    - docker
     - fish
-    - fzf
+    - cli
+    - docker
     - anyenv
     - rust
     - pwn
