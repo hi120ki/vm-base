@@ -2,13 +2,13 @@
   become: yes
   roles:
     - apt
-    - git
-    - ssh
-    - netdata
-    - docker
+    # - git
+    # - ssh
+    # - netdata
+    # - docker
     - fish
-    - fzf
-    - anyenv
+    # - fzf
+    # - anyenv
     - rust
-    - pwn
-    - forensics
+    # - pwn
+    # - forensics

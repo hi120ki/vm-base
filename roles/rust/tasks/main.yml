@@ -66,12 +66,7 @@
       become: no
       shell: unzip -o /tmp/exa.zip -d /tmp/exa
     - name: copy exa
-      copy:
-        src: /tmp/exa/bin/exa
-        dest: /usr/local/bin/
-        owner: root
-        group: root
-        mode: "0755"
+      shell: cp /tmp/exa/bin/exa /usr/local/bin/
   when:
     - not check_exa.stat.exists
 
@@ -101,6 +96,6 @@
         url: https://github.com/sharkdp/bat/releases/download/v0.21.0/bat_0.21.0_amd64.deb
         dest: /tmp/bat.deb
     - name: install bat
-      shell: apt install /tmp/bat.deb
+      shell: dpkg -i /tmp/bat.deb
   when:
     - not check_bat.stat.exists
