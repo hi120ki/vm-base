@@ -1,6 +1,6 @@
 python_install: true
 python3_install: true
-python3_version: "3.8.13"
+python3_version: "3.8.14"
 python3_libs:
   - pipdeptree
   - black
@@ -18,17 +18,17 @@ python2_install: true
 python2_version: "2.7.18"
 python2_libs:
   - numpy
-python_global_version: "3.8.13"
+python_global_version: "3.8.14"
 nodejs_install: true
-nodejs_version: "16.16.0"
-nodejs_global_version: "16.16.0"
+nodejs_version: "16.17.1"
+nodejs_global_version: "16.17.1"
 nodejs_libs:
   - prettier
   - "@prettier/plugin-php"
   - zx
 golang_install: true
-golang_version: "1.18.4"
-golang_global_version: "1.18.4"
+golang_version: "1.18.6"
+golang_global_version: "1.18.6"
 golang_libs:
 ruby_install: false
 ruby_version: "2.7.6"
