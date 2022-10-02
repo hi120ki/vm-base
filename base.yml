@@ -11,4 +11,4 @@
     - anyenv
     - rust
     - pwn
-    - forensics
+    # - forensics
