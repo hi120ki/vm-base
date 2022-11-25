@@ -29,3 +29,14 @@
         chdir: ~/gdb-peda-pwndbg-gef
   when:
     - not gdb_dir.stat.exists
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK pwn"
+    content: |
+      # https://github.com/Gallopsled/pwntools
+      function exploit
+        pwn template --host $argv[1] --port $argv[2] $argv[3] > exploit.py | black exploit.py
+      end
