@@ -26,3 +26,4 @@
   shell: "snap install {{ item }}"
   with_items:
     - httpie
+    - yq
