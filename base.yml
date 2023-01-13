@@ -9,6 +9,6 @@
     - cli
     - docker
     - anyenv
-    - rust
+    # - rust
     - pwn
     # - forensics
