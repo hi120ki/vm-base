@@ -1,37 +1,34 @@
 python_install: true
 python3_install: true
-python3_version: "3.9.15"
+python3_version: "3.9.16"
 python3_libs:
   - pipdeptree
   - black
-  - pycryptodome
+  - bandit
   - requests
   - numpy
   - sympy
   - scipy
   - gmpy2
-  - matplotlib
-  - bandit
+  - pycryptodome
   - pwntools
-  - angr
 python2_install: true
 python2_version: "2.7.18"
 python2_libs:
   - numpy
-python_global_version: "3.9.15"
+python_global_version: "3.9.16"
 nodejs_install: true
-nodejs_version: "18.12.0"
-nodejs_global_version: "18.12.0"
+nodejs_version: "18.13.0"
+nodejs_global_version: "18.13.0"
 nodejs_libs:
   - prettier
   - "@prettier/plugin-php"
-  - zx
 golang_install: true
-golang_version: "1.18.7"
-golang_global_version: "1.18.7"
+golang_version: "1.19.5"
+golang_global_version: "1.19.5"
 golang_libs:
 ruby_install: false
-ruby_version: "2.7.6"
-ruby_global_version: "2.7.6"
+ruby_version: "2.7.7"
+ruby_global_version: "2.7.7"
 ruby_libs:
   - one_gadget
