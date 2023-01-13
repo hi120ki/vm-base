@@ -12,7 +12,7 @@ python3_libs:
   - gmpy2
   - pycryptodome
   - pwntools
-python2_install: true
+python2_install: false
 python2_version: "2.7.18"
 python2_libs:
   - numpy
