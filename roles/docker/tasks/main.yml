@@ -168,3 +168,12 @@
       alias dcrm 'docker-compose rm -f'
       alias dcps 'docker-compose ps'
       alias dcex 'docker-compose exec'
+- name: install earthly
+  get_url:
+    url: "https://github.com/earthly/earthly/releases/latest/download/earthly-linux-amd64"
+    dest: /usr/local/bin/earthly
+    owner: root
+    group: root
+    mode: 0755
+- name: init earthly
+  shell: "/usr/local/bin/earthly bootstrap --with-autocomplete"
