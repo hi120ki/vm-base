@@ -1,0 +1,17 @@
+- name: check devbox installed
+  stat:
+    path: /usr/local/bin/devbox
+  register: check_devbox
+  become: no
+- block:
+    - name: download devbox
+      uri:
+        url: https://get.jetpack.io/devbox
+        return_content: yes
+      register: devbox
+    - name: install devbox
+      shell:
+        cmd: bash -s -- -f
+        stdin: "{{ devbox.content }}"
+  when:
+    - not check_devbox.stat.exists

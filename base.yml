@@ -7,8 +7,9 @@
     - netdata
     - fish
     - cli
+    - devbox
     - docker
     - anyenv
-    # - rust
     - pwn
+    # - rust
     # - forensics
