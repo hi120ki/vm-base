@@ -13,5 +13,6 @@
       shell:
         cmd: bash -s -- -f
         stdin: "{{ devbox.content }}"
+      become: no
   when:
     - not check_devbox.stat.exists
