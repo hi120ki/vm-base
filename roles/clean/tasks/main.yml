@@ -1,0 +1,12 @@
+- name: rm -r /var/lib/apt/lists
+  file:
+    path: /var/lib/apt/lists
+    state: absent
+- name: rm -r /var/cache/apt/archives
+  file:
+    path: /var/cache/apt/archives
+    state: absent
+- name: rm -r /var/lib/snapd/cache
+  file:
+    path: /var/lib/snapd/cache
+    state: absent
