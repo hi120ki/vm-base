@@ -52,7 +52,7 @@
         mode: 0755
     - name: test docker plugin directory created
       file:
-        path: /usr/local/lib/docker
+        path: /usr/local/lib/docker/cli-plugins
         state: directory
         owner: root
         group: root
