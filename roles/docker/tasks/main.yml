@@ -61,7 +61,7 @@
     - name: "install docker-compose as plugin"
       get_url:
         url: "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-x86_64"
-        dest: /usr/local/lib/docker/cli-plugins
+        dest: /usr/local/lib/docker/cli-plugins/docker-compose
         owner: root
         group: root
         mode: 0755
