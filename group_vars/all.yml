@@ -11,7 +11,6 @@ python3_libs:
   - scipy
   - gmpy2
   - pycryptodome
-  - pwntools
 python2_install: false
 python2_version: "2.7.18"
 python2_libs:
@@ -21,8 +20,8 @@ nodejs_install: true
 nodejs_version: "18.16.0"
 nodejs_global_version: "18.16.0"
 nodejs_libs:
+  - npm-check-updates
   - prettier
-  - "@prettier/plugin-php"
 golang_install: true
 golang_version: "1.19.9"
 golang_global_version: "1.19.9"
