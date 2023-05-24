@@ -4,7 +4,6 @@
     - apt
     - git
     - ssh
-    # - netdata
     - fish
     - cli
     - devbox
@@ -12,5 +11,3 @@
     - anyenv
     - pwn
     - clean
-    # - rust
-    # - forensics
