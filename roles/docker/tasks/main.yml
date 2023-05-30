@@ -160,7 +160,7 @@
       alias di 'docker images | sort -k6 -h'
       alias dip 'docker image prune -f'
       alias dvp 'docker volume prune -f'
-      alias dockercleanall 'docker ps --format "\{\{.Names\}\}" | xargs docker stop ; docker ps -a --format "\{\{.Names\}\}" | xargs docker rm ; docker images --format "\{\{.Repository\}\}:\{\{.Tag\}\}" | xargs docker rmi ; docker network prune -f ; docker volume prune -f ; docker builder prune -f ; docker system prune -f'
+      alias dockercleanall 'docker ps --format "\{\{\.Names\}\}" | xargs docker stop ; docker ps -a --format "\{\{\.Names\}\}" | xargs docker rm ; docker images --format "\{\{\.Repository\}\}:\{\{\.Tag\}\}" | xargs docker rmi ; docker network prune -f ; docker volume prune -f ; docker builder prune -f ; docker system prune -f'
       # Docker Compose
       alias dc 'docker-compose'
       alias dcb 'docker-compose build'
