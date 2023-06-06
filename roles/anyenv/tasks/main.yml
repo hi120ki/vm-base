@@ -83,7 +83,7 @@
       shell: mkdir -p ~/.anyenv/plugins
       become: no
     - name: git clone anyenv-update
-      shell: git clone -depth 1 https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
+      shell: git clone --depth 1 https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
       become: no
   when:
     - not check_anyenv_update.stat.exists
