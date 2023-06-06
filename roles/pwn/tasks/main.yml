@@ -21,7 +21,7 @@
 - block:
     - name: git clone gdb-peda-pwndbg-gef
       become: no
-      shell: git clone -depth 1 https://github.com/apogiatzis/gdb-peda-pwndbg-gef.git ~/gdb-peda-pwndbg-gef
+      shell: git clone --depth 1 https://github.com/apogiatzis/gdb-peda-pwndbg-gef.git ~/gdb-peda-pwndbg-gef
     - name: install gdb-peda-pwndbg-gef
       become: no
       shell: bash ./install.sh
