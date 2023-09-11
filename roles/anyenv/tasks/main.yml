@@ -10,6 +10,7 @@
     - name: "apt install pyenv lib"
       apt:
         pkg:
+          - zsh
           - make
           - build-essential
           - libssl-dev
@@ -28,7 +29,7 @@
           - libffi-dev
           - liblzma-dev
     - name: git clone anyenv
-      shell: git clone --depth 1 https://github.com/anyenv/anyenv ~/.anyenv
+      shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
       become: no
   when:
     - not check_anyenv.stat.exists
@@ -83,7 +84,7 @@
       shell: mkdir -p ~/.anyenv/plugins
       become: no
     - name: git clone anyenv-update
-      shell: git clone --depth 1 https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
+      shell: git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
       become: no
   when:
     - not check_anyenv_update.stat.exists
@@ -167,8 +168,8 @@
         content: |
           alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
           alias pipreq='pip install -r requirements.txt'
-          alias venv='source venv/bin/activate.fish'
-          alias venvinit='rm -rf venv ; python -m venv venv'
+          alias venv='source .venv/bin/activate.fish'
+          alias venvinit='rm -rf .venv ; python -m venv .venv'
           alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
     - name: edit ~/.zshrc
       become: no
@@ -179,8 +180,8 @@
         content: |
           alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
           alias pipreq='pip install -r requirements.txt'
-          alias venv='source venv/bin/activate.fish'
-          alias venvinit='rm -rf venv ; python -m venv venv'
+          alias venv='source .venv/bin/activate.fish'
+          alias venvinit='rm -rf .venv ; python -m venv .venv'
           alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
     - name: edit ~/.config/fish/config.fish
       become: no
@@ -191,8 +192,8 @@
         content: |
           alias pipinit 'pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
           alias pipreq 'pip install -r requirements.txt'
-          alias venv 'source venv/bin/activate.fish'
-          alias venvinit 'rm -rf venv ; python -m venv venv'
+          alias venv 'source .venv/bin/activate.fish'
+          alias venvinit 'rm -rf .venv ; python -m venv .venv'
           alias venvsetup 'venvinit ; venv ; pip install -U pip ; pipreq'
   when:
     - python_install
