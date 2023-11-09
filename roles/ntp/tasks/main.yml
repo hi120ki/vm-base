@@ -6,6 +6,7 @@
     content: |
       NTP=ntp.nict.jp
 - name: Restart systemd-timesyncd
+  ignore_errors: True
   systemd:
     name: systemd-timesyncd
     state: restarted
