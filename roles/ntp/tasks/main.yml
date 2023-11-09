@@ -1,0 +1,11 @@
+- name: edit /etc/systemd/timesyncd.conf
+  blockinfile:
+    dest: /etc/systemd/timesyncd.conf
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    content: |
+      NTP=ntp.nict.jp
+- name: Restart systemd-timesyncd
+  systemd:
+    name: systemd-timesyncd
+    state: restarted
