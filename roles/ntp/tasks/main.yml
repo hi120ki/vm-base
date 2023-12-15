@@ -1,3 +1,5 @@
+# echo "NTP=ntp.nict.jp" | sudo tee -a /etc/systemd/timesyncd.conf
+# sudo systemctl restart systemd-timesyncd
 - name: edit /etc/systemd/timesyncd.conf
   blockinfile:
     dest: /etc/systemd/timesyncd.conf
