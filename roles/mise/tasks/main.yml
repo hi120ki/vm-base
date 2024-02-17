@@ -1,0 +1,129 @@
+- name: Update apt packages
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  apt:
+    name:
+      - gpg
+      - sudo
+      - wget
+      - curl
+      - zsh
+    state: present
+
+- name: Create directory for apt keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download and install mise GPG key
+  shell: |
+    wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg > /dev/null
+  args:
+    creates: /etc/apt/keyrings/mise-archive-keyring.gpg
+
+- name: Add mise repository to sources.list.d
+  lineinfile:
+    path: /etc/apt/sources.list.d/mise.list
+    line: "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main"
+    create: true
+
+- name: Update apt packages again
+  apt:
+    update_cache: yes
+
+- name: Install mise package
+  apt:
+    name: mise
+    state: present
+
+- name: add PATH ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK mise"
+    content: |
+      eval "$(mise activate zsh)"
+
+- name: add PATH ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK mise"
+    content: |
+      mise activate fish | source
+
+- name: add PATH ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK mise"
+    content: |
+      eval "$(mise activate bash)"
+
+- name: edit ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
+      alias pipreq='pip install -r requirements.txt'
+      alias venv='source .venv/bin/activate.fish'
+      alias venvinit='rm -rf .venv ; python -m venv .venv'
+      alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
+- name: edit ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit='pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
+      alias pipreq='pip install -r requirements.txt'
+      alias venv='source .venv/bin/activate.fish'
+      alias venvinit='rm -rf .venv ; python -m venv .venv'
+      alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK python"
+    content: |
+      alias pipinit 'pip install -U pip ; pip install -U pipdeptree black pycryptodome requests numpy sympy scipy gmpy2 matplotlib bandit'
+      alias pipreq 'pip install -r requirements.txt'
+      alias venv 'source .venv/bin/activate.fish'
+      alias venvinit 'rm -rf .venv ; python -m venv .venv'
+      alias venvsetup 'venvinit ; venv ; pip install -U pip ; pipreq'
+
+- name: edit ~/.bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
+- name: edit ~/.zshrc
+  become: no
+  blockinfile:
+    dest: ~/.zshrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
+- name: edit ~/.config/fish/config.fish
+  become: no
+  blockinfile:
+    dest: ~/.config/fish/config.fish
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nodejs"
+    content: |
+      alias nup 'npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'

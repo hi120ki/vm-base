@@ -8,7 +8,16 @@ Vagrant.configure("2") do |config|
     vb.memory = 8192
   end
 
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
+#   config.vm.provision "shell", privileged: false, inline: <<-SHELL
+#     sudo apt-add-repository -y -u ppa:ansible/ansible ; sudo apt install -y ansible
+#     ansible-playbook -c=local -i local, /vagrant/test.yml
+#   SHELL
+
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "base.yml"
+    ansible.playbook = "test.yml"
   end
 end
