@@ -14,10 +14,10 @@ Vagrant.configure("2") do |config|
 
 #   config.vm.provision "shell", privileged: false, inline: <<-SHELL
 #     sudo apt-add-repository -y -u ppa:ansible/ansible ; sudo apt install -y ansible
-#     ansible-playbook -c=local -i local, /vagrant/test.yml
+#     ansible-playbook -c=local -i local, /vagrant/ctf.yml
 #   SHELL
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "test.yml"
+    ansible.playbook = "ctf.yml"
   end
 end
