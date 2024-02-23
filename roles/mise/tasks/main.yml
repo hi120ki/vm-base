@@ -16,13 +16,11 @@
   file:
     path: /etc/apt/keyrings
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Download and install mise GPG key
   shell: |
-    wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg > /dev/null
-  args:
-    creates: /etc/apt/keyrings/mise-archive-keyring.gpg
+    curl -fsSL "https://mise.jdx.dev/gpg-key.pub" | gpg --dearmor --yes -o /etc/apt/keyrings/mise-archive-keyring.gpg
 
 - name: Add mise repository to sources.list.d
   lineinfile:
