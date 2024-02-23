@@ -4,15 +4,39 @@
   register: check_fish
   become: no
 - block:
-    - name: ppa:fish-shell
-      ansible.builtin.apt_repository:
-        repo: ppa:fish-shell/release-3
-    - name: apt update
+    - name: Create directory for apt keyrings
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Download and install Fish GPG key
+      shell: |
+        sudo gpg --homedir /tmp --no-default-keyring --keyring /etc/apt/keyrings/fish.gpg --keyserver keyserver.ubuntu.com --recv-keys 59FDA1CE1B84B3FAD89366C027557F056DC33CA5
+
+    - name: Set permissions for Fish GPG key
+      file:
+        path: /etc/apt/keyrings/fish.gpg
+        mode: "0644"
+
+    - name: Define lsb_release
+      shell: "lsb_release -cs"
+      ignore_errors: True
+      register: lsb_release
+
+    - name: Add Fish repository to sources.list.d
+      lineinfile:
+        path: /etc/apt/sources.list.d/fish.list
+        line: "deb [arch=amd64 signed-by=/etc/apt/keyrings/fish.gpg] https://ppa.launchpadcontent.net/fish-shell/release-3/ubuntu {{ lsb_release.stdout }} main"
+        create: true
+
+    - name: Update package cache again
       apt:
         update_cache: yes
-    - name: "apt install fish"
+
+    - name: Install Fish packages
       apt:
-        pkg:
+        name:
           - fish
   when:
     - not check_fish.stat.exists
