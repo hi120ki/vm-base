@@ -17,20 +17,20 @@
   stat:
     path: ~/gdb-peda-pwndbg-gef
   register: gdb_dir
-  become: no
+  become: false
 - block:
     - name: git clone gdb-peda-pwndbg-gef
-      become: no
+      become: false
       shell: git clone --depth 1 https://github.com/apogiatzis/gdb-peda-pwndbg-gef.git ~/gdb-peda-pwndbg-gef
     - name: install gdb-peda-pwndbg-gef
-      become: no
+      become: false
       shell: bash ./install.sh
       args:
         chdir: ~/gdb-peda-pwndbg-gef
   when:
     - not gdb_dir.stat.exists
 - name: edit ~/.config/fish/config.fish
-  become: no
+  become: false
   blockinfile:
     dest: ~/.config/fish/config.fish
     create: true

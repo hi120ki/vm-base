@@ -38,7 +38,7 @@
     state: present
 
 - name: add PATH ~/.zshrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.zshrc
     create: true
@@ -47,7 +47,7 @@
       eval "$(mise activate zsh)"
 
 - name: add PATH ~/.config/fish/config.fish
-  become: no
+  become: false
   blockinfile:
     dest: ~/.config/fish/config.fish
     create: true
@@ -56,7 +56,7 @@
       mise activate fish | source
 
 - name: add PATH ~/.bashrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.bashrc
     create: true
@@ -65,7 +65,7 @@
       eval "$(mise activate bash)"
 
 - name: edit ~/.bashrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.bashrc
     create: true
@@ -77,7 +77,7 @@
       alias venvinit='rm -rf .venv ; python -m venv .venv'
       alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
 - name: edit ~/.zshrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.zshrc
     create: true
@@ -89,7 +89,7 @@
       alias venvinit='rm -rf .venv ; python -m venv .venv'
       alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
 - name: edit ~/.config/fish/config.fish
-  become: no
+  become: false
   blockinfile:
     dest: ~/.config/fish/config.fish
     create: true
@@ -102,7 +102,7 @@
       alias venvsetup 'venvinit ; venv ; pip install -U pip ; pipreq'
 
 - name: edit ~/.bashrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.bashrc
     create: true
@@ -110,7 +110,7 @@
     content: |
       alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
 - name: edit ~/.zshrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.zshrc
     create: true
@@ -118,7 +118,7 @@
     content: |
       alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
 - name: edit ~/.config/fish/config.fish
-  become: no
+  become: false
   blockinfile:
     dest: ~/.config/fish/config.fish
     create: true
