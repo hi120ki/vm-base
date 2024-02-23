@@ -64,42 +64,56 @@
       # ======================================================================== #
 
       function cd
-        builtin cd $argv
-        ls
+          builtin cd $argv
+          ls
       end
 
       # https://github.com/eza-community/eza
-      alias ls 'eza -lg --octal-permissions --time-style long-iso --icons'
-      alias l 'eza -lg --octal-permissions --time-style long-iso --icons'
-      alias la 'eza -lag --octal-permissions --time-style long-iso --icons'
-      function lt
-        if count $argv > /dev/null
-          eza -lT --git --git-ignore --icons --time-style=long-iso -L=$argv
-        else
-          eza -lT --git --git-ignore --icons --time-style=long-iso -L=2
-        end
+      if command -sq eza
+          alias ls 'eza -lg --octal-permissions --time-style long-iso --icons'
+          alias l 'eza -lg --octal-permissions --time-style long-iso --icons'
+          alias la 'eza -lag --octal-permissions --time-style long-iso --icons'
+          function lt
+              if count $argv >/dev/null
+                  eza -lT --git --git-ignore --octal-permissions --time-style=long-iso --icons -L=$argv
+              else
+                  eza -lT --git --git-ignore --octal-permissions --time-style=long-iso --icons -L=2
+              end
+          end
+      else
+          alias l ls
+          alias la 'ls -ahl'
       end
 
       # https://github.com/sharkdp/bat
-      # bat --list-themes
-      alias c 'bat --theme="OneHalfDark"'
+      if command -sq bat
+          # bat --list-themes
+          alias c 'bat --theme="OneHalfDark"'
+      else
+          alias c cat
+      end
 
       # https://github.com/BurntSushi/ripgrep
-      alias gr 'rg'
-      alias grl 'rg -l'
+      if command -sq rg
+          alias gr rg
+          alias grl 'rg -l'
+      end
 
       # https://github.com/sharkdp/fd
-      alias f 'fd'
-      alias rmds 'fd -IH ".DS_Store" | xargs rm'
-      alias cleanc 'fd ".*.c" | xargs clang-format -style=Google -i'
-      alias cleanmd 'fd ".*.md" | xargs prettier --write'
-      alias cleanjson 'fd ".*.json" | xargs prettier --write'
-      alias cleanyml 'fd ".*.yml" | xargs prettier --write'
-      alias cleancss 'fd ".*.css" -E ".*min.css" | xargs prettier --write'
-      alias cleanjs 'fd ".*.js" -E ".*min.js" | xargs prettier --write'
-      alias cleanpy 'fd ".*.py" | xargs black'
-      alias cleansh 'fd ".*.sh" | xargs shfmt -i 2 -w'
-      alias cleanhtml 'fd ".*.html" -E ".*min.html" | xargs js-beautify -I -r -n -s 2 --no-preserve-newlines'
+      if command -sq fd
+          alias f fd
+          alias rmds 'fd -IH ".DS_Store" | xargs rm'
+          alias cleanc 'fd -e c -e h -e cpp -x clang-format -i'
+          alias cleanmd 'fd -e md -x xargs prettier --write'
+          alias cleanjson 'fd -e json -x prettier --no-config -w'
+          alias cleanyml 'fd -e yml -e yaml -x prettier --no-config -w'
+          alias cleanpy 'black .'
+          alias cleansh 'fd -e sh -x xargs shfmt -i 2 -w'
+          alias cleancss "fd -e css -E '*min.css' -x prettier --no-config -w"
+          alias cleanjs "fd -e js -E '*min.js' -x prettier --no-config -w"
+          alias cleants 'fd -e ts -e tsx | xargs prettier --write'
+          alias cleanhtml 'fd ".*.html" -E ".*min.html" | xargs js-beautify -I -r -n -s 2 --no-preserve-newlines'
+      end
 
       # ======================================================================== #
       # Shorthand command
@@ -118,12 +132,13 @@
       alias up 'sudo apt update ; sudo apt upgrade -y'
 
       # Git
-      alias g 'git'
+      alias g git
       alias gl 'git pull'
       alias ga 'git add --all'
       alias gc 'git commit -m'
-      alias gp 'git push origin (git_current_branch)'
-      alias commit 'git add . ; git commit -m "commit" ; git push origin main'
+      alias gp 'git push -u origin main'
+      alias fix 'git add . ; git commit -m "fix" ; git push -u origin main'
+      alias commit 'git add . ; git commit -m "commit" ; git push -u origin main'
 - name: install fisher
   shell: curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
   become: no
