@@ -7,7 +7,7 @@
     # https://github.com/eza-community/eza
     - name: download eza
       get_url:
-        url: https://github.com/eza-community/eza/releases/download/v0.18.4/eza_x86_64-unknown-linux-gnu.tar.gz
+        url: https://github.com/eza-community/eza/releases/download/v0.20.18/eza_x86_64-unknown-linux-gnu.tar.gz
         dest: /tmp/eza.tar.gz
     - name: unzip eza
       become: false
@@ -26,13 +26,10 @@
     # https://github.com/BurntSushi/ripgrep
     - name: download ripgrep
       get_url:
-        url: https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep-14.1.0-x86_64-unknown-linux-musl.tar.gz
-        dest: /tmp/ripgrep.tar.gz
-    - name: unzip ripgrep
-      become: false
-      shell: tar -zxvf /tmp/ripgrep.tar.gz -C /tmp
-    - name: copy ripgrep
-      shell: cp /tmp/ripgrep-14.1.0-x86_64-unknown-linux-musl/rg /usr/local/bin/
+        url: https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
+        dest: /tmp/ripgrep.deb
+    - name: install ripgrep
+      shell: dpkg -i /tmp/ripgrep.deb
   when:
     - not check_ripgrep.stat.exists
 
@@ -45,7 +42,7 @@
     # https://github.com/sharkdp/bat
     - name: download bat
       get_url:
-        url: https://github.com/sharkdp/bat/releases/download/v0.24.0/bat_0.24.0_amd64.deb
+        url: https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb
         dest: /tmp/bat.deb
     - name: install bat
       shell: dpkg -i /tmp/bat.deb
@@ -61,7 +58,7 @@
     # https://github.com/sharkdp/fd
     - name: download fd
       get_url:
-        url: https://github.com/sharkdp/fd/releases/download/v9.0.0/fd-musl_9.0.0_amd64.deb
+        url: https://github.com/sharkdp/fd/releases/download/v10.2.0/fd_10.2.0_amd64.deb
         dest: /tmp/fd.deb
     - name: install fd
       shell: dpkg -i /tmp/fd.deb
